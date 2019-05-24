@@ -1,0 +1,4 @@
+---
+
+# MongoDB version that want to be installed
+mongodb_version: 4.0

@@ -1,0 +1,9 @@
+---
+
+- import_tasks: install.yml
+
+- name: Start & enable MongoDB
+  service:
+    name: mongod
+    state: started
+    enabled: true
