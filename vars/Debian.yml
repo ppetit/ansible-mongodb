@@ -1,0 +1,6 @@
+---
+
+mongodb_db_path: /var/lib/mongodb
+
+mongodb_process_management:
+  timeZoneInfo: /usr/share/zoneinfo

@@ -1,0 +1,13 @@
+{{ ansible_managed | comment }}
+
+storage:
+{{ mongodb_storage | to_nice_yaml(indent=2) | indent(2, True) }}
+
+systemLog:
+{{ mongodb_system_log | to_nice_yaml(indent=2) | indent(2, True) }}
+
+processManagement:
+{{ mongodb_process_management | to_nice_yaml(indent=2) | indent(2, True) }}
+
+net:
+{{ mongodb_net | to_nice_yaml(indent=2) | indent(2, True) }}
