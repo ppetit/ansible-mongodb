@@ -8,6 +8,9 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 def test_service(host):
     s = host.service('mongod')
-
-    assert s.is_enabled
     assert s.is_running
+
+
+def test_socket(host):
+    s = host.socket('tcp://127.0.0.1:27017')
+    assert s.is_listening

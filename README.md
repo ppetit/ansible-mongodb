@@ -1,6 +1,8 @@
 Cloudweeb Mongodb
 =========
 
+[![Build Status](https://travis-ci.com/cloudweeb/cloudweeb.mongodb.svg?branch=master)](https://travis-ci.com/cloudweeb/cloudweeb.mongodb)
+
 Ansible role to install MongoDB
 
 Requirements
