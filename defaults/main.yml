@@ -5,6 +5,11 @@ mongodb_version: 4.0
 mongodb_listen_port: 27017
 mongodb_listen_addr: 127.0.0.1
 
+# MongoDB user variable
+mongodb_admin_user: root
+mongodb_admin_password: password
+mongodb_users: []
+
 # Where and how to store data.
 mongodb_storage:
   dbPath: '{{ mongodb_db_path }}'

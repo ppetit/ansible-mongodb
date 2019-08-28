@@ -13,8 +13,4 @@
 
 - import_tasks: configure.yml
 
-- name: Start & enable MongoDB
-  service:
-    name: mongod
-    state: started
-    enabled: true
+- import_tasks: users.yml

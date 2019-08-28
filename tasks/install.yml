@@ -1,5 +1,10 @@
 ---
 
+- name: Install pymongo
+  pip:
+    name: pymongo
+    state: present
+
 - block:
 
     - name: (CentOS/RedHat) Add MongoDB repository

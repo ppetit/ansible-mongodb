@@ -5,3 +5,9 @@
     src: mongod.conf.j2
     dest: /etc/mongod.conf
   notify: restart mongod
+
+- name: Start & enable MongoDB
+  service:
+    name: mongod
+    state: started
+    enabled: true
