@@ -1,9 +1,10 @@
 ---
 
 # MongoDB version that want to be installed
-mongodb_version: 4.0
+mongodb_version: 4.2
 mongodb_listen_port: 27017
 mongodb_listen_addr: 127.0.0.1
+mongodb_install_method: package
 
 # MongoDB user variable
 mongodb_admin_user: root
@@ -16,11 +17,13 @@ mongodb_storage:
   journal:
     enabled: true
 
+mongodb_log_dir: /var/log/mongodb/
+
 # Where to write logging data.
 mongodb_system_log:
   destination: file
   logAppend: true
-  path: /var/log/mongodb/mongod.log
+  path: "{{ mongodb_log_dir}}/mongod.log"
 
 # MongoDB network interfaces
 mongodb_net:

@@ -9,7 +9,13 @@
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
 
-- import_tasks: install.yml
+- import_tasks: preflight.yml
+  
+- import_tasks: tarball_install.yml
+  when: mongodb_install_method == "tarball"
+
+- import_tasks: package_install.yml
+  when: mongodb_install_method == "package"
 
 - import_tasks: configure.yml
 

@@ -2,6 +2,9 @@
 
 mongodb_db_path: /var/lib/mongo
 
+mongodb_selinux_packages:
+  - checkpolicy
+
 mongodb_process_management:
   fork: true
   pidFilePath: /var/run/mongodb/mongod.pid

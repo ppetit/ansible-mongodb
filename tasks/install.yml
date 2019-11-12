@@ -6,7 +6,6 @@
     state: present
 
 - block:
-
     - name: (CentOS/RedHat) Add MongoDB repository
       yum_repository:
         name: 'mongodb-org-{{ mongodb_version }}'
@@ -15,35 +14,28 @@
         gpgcheck: true
         enabled: true
         gpgkey: 'https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc'
-
     - name: (CentOS/RedHat) Install MongoDB
       yum:
         name: mongodb-org
         state: present
-
   when: ansible_os_family == 'RedHat'
 
 - block:
-
     - name: (Debian) Ensure gnupg is installed
       apt:
         name: gnupg
         state: present
         update_cache: true
-
     - name: (Debian) Import MongoDB public key
       apt_key:
         keyserver: keyserver.ubuntu.com
         id: 9DA31620334BD75D9DCB49F368818C72E52529D4
-
     - name: (Debian) Add MongoDB repository
       apt_repository:
         repo: 'deb http://repo.mongodb.org/apt/debian {{ ansible_distribution_release }}/mongodb-org/{{ mongodb_version }} main'
         filename: 'mongodb-org-{{ mongodb_version }}'
-
     - name: (Debian) Install MongoDB
       apt:
         name: mongodb-org
         state: present
-
   when: ansible_os_family == 'Debian'

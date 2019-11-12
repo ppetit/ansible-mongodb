@@ -1,0 +1,63 @@
+---
+
+- name: Install pymongo
+  pip:
+    name: pymongo
+    state: present
+
+- name: download mongodb binary to local folder
+  become: false
+  get_url:
+    url: "{{mongodb_download_url}}{{ mongodb_version }}/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}.tgz"
+    dest: "/tmp/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}.tgz"
+    checksum: "sha256:{{ mongodb_checksum | default(omit) }}"
+    url_username: "{{ mongodb_download_auth.username | default(omit) }}"
+    url_password: "{{ mongodb_download_auth.password | default(omit) }}"
+    validate_certs: "{{ mongodb_download_auth.validate_certs | default(True) }}"
+  register: _download_archive
+  until: _download_archive is succeeded
+  retries: 5
+  delay: 2
+  run_once: true
+  delegate_to: localhost
+  check_mode: false
+  no_log: "{{ not lookup('env', 'ANSIBLE_DEBUG') | bool }}"
+
+- name: unpack mongodb binaries
+  become: false
+  unarchive:
+    src: "/tmp/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}.tgz"
+    dest: "/tmp"
+    creates: "/tmp/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}"
+  delegate_to: localhost
+  check_mode: false
+
+- name: propagate mongodb binaries
+  copy:
+    src: "/tmp/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    mode: 0755
+    owner: root
+    group: root
+  with_items:
+    - mongodb
+  notify:
+    - restart mongodb
+
+- name: create systemd service unit                                                                                                                      
+  template:
+    src: mongodb.service.j2
+    dest: /etc/systemd/system/mongodb.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Allow mongodb port in SELinux on RedHat OS family
+  seport:
+    ports: "{{ mongodb_listen_port }}"
+    proto: tcp
+    setype: http_port_t
+    state: present
+  when:
+    - ansible_version.full is version_compare('2.4', '>=')
+    - ansible_selinux.status == "enabled"
