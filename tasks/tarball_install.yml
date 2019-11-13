@@ -1,5 +1,22 @@
 ---
+- name: create systemd service unit
+  template:
+    src: mongodb.service.j2
+    dest: /etc/systemd/system/mongodb.service
+    owner: root
+    group: root
+    mode: 0644
 
+- name: Allow mongodb port in SELinux on RedHat OS family
+  seport:
+    ports: "{{ mongodb_listen_port }}"
+    proto: tcp
+    setype: http_port_t
+    state: present
+  when:
+    - ansible_version.full is version_compare('2.4', '>=')
+    - ansible_selinux.status == "enabled"
+    
 - name: download mongodb binary to local folder
   become: false
   get_url:
@@ -30,8 +47,8 @@
 
 - name: propagate mongodb binaries
   copy:
-    src: "{{ item }}"
-    dest: "/usr/local/bin/{{ item }}"
+    src: "{{ item }} "
+    dest: "/usr/local/bin/{{ item | basename }}"
     mode: 0755
     owner: root
     group: root
@@ -40,20 +57,3 @@
   notify:
     - restart mongodb
 
-- name: create systemd service unit                                                                                                                      
-  template:
-    src: mongodb.service.j2
-    dest: /etc/systemd/system/mongodb.service
-    owner: root
-    group: root
-    mode: 0644
-
-- name: Allow mongodb port in SELinux on RedHat OS family
-  seport:
-    ports: "{{ mongodb_listen_port }}"
-    proto: tcp
-    setype: http_port_t
-    state: present
-  when:
-    - ansible_version.full is version_compare('2.4', '>=')
-    - ansible_selinux.status == "enabled"
