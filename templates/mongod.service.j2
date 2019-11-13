@@ -33,5 +33,9 @@ TasksAccounting=false
 # Recommended limits for for mongod as specified in
 # https://docs.mongodb.com/manual/reference/ulimit/#recommended-ulimit-settings
 
+SyslogIdentifier=mongod
+Restart=always
+RestartSec=0
+
 [Install]
 WantedBy=multi-user.target
