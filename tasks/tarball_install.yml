@@ -16,7 +16,7 @@
   when:
     - ansible_version.full is version_compare('2.4', '>=')
     - ansible_selinux.status == "enabled"
-    
+
 - name: download mongodb binary to local folder
   become: false
   get_url:
@@ -47,7 +47,7 @@
 
 - name: propagate mongodb binaries
   copy:
-    src: "{{ item }} "
+    src: "{{ item }}"
     dest: "/usr/local/bin/{{ item | basename }}"
     mode: 0755
     owner: root
@@ -55,5 +55,5 @@
   with_fileglob:
     - "/tmp/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}/bin/*"
   notify:
-    - restart mongodb
+    - restart mongod
 
