@@ -16,7 +16,7 @@
     name: mongod
     system: true
     shell: "/sbin/nologin"
-    group: mongodb
+    group: mongod
     createhome: false
     home: "{{ mongodb_db_path }}"
 
