@@ -9,3 +9,8 @@ mongodb_process_management:
   fork: true
   pidFilePath: /var/run/mongodb/mongod.pid
   timeZoneInfo: /usr/share/zoneinfo
+
+mongodb_dependencies:
+  - python-pip
+  - libcurl
+  - openssl
