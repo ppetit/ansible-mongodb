@@ -5,7 +5,7 @@
   get_url:
     url: "{{mongodb_download_url}}/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}.tgz"
     dest: "/tmp/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}.tgz"
-    checksum: "sha256:{{ mongodb_checksum | default(omit) }}"
+    checksum: "{{ mongodb_checksum | default(omit) }}"
     url_username: "{{ mongodb_download_auth.username | default(omit) }}"
     url_password: "{{ mongodb_download_auth.password | default(omit) }}"
     validate_certs: "{{ mongodb_download_auth.validate_certs | default(True) }}"
@@ -30,13 +30,13 @@
 
 - name: propagate mongodb binaries
   copy:
-    src: "/tmp/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}/{{ item }}"
+    src: "{{ item }}"
     dest: "/usr/local/bin/{{ item }}"
     mode: 0755
     owner: root
     group: root
-  with_items:
-    - mongodb
+  with_fileglob:
+    - "/tmp/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}/bin/*"
   notify:
     - restart mongodb
 
