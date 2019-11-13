@@ -22,7 +22,7 @@
 
 - name: create mongodb data directory
   file:
-    path: "{{ mongodb_db_path }}"
+    path: "{{ mongodb_db      _path }}"
     state: directory
     owner: mongod
     group: mongod

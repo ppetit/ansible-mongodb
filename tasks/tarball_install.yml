@@ -1,10 +1,5 @@
 ---
 
-- name: Install pymongo
-  pip:
-    name: pymongo
-    state: present
-
 - name: download mongodb binary to local folder
   become: false
   get_url:
