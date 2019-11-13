@@ -57,3 +57,8 @@
   notify:
     - restart mongod
 
+- name: Install python pymongo module
+  pip:
+    name: pymongo
+    state: present
+
