@@ -5,7 +5,8 @@ mongodb_version: 4.2
 mongodb_listen_port: 27017
 mongodb_listen_addr: 127.0.0.1
 mongodb_install_method: package
-mongodb_download_url: 
+mongodb_download_url: "https://fastdl.mongodb.org/linux"
+mongodb_download_auth: {}
 
 # MongoDB user variable
 mongodb_admin_user: root

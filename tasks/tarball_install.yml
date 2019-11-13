@@ -3,7 +3,7 @@
 - name: download mongodb binary to local folder
   become: false
   get_url:
-    url: "{{mongodb_download_url}}{{ mongodb_version }}/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}.tgz"
+    url: "{{mongodb_download_url}}/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}.tgz"
     dest: "/tmp/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}.tgz"
     checksum: "sha256:{{ mongodb_checksum | default(omit) }}"
     url_username: "{{ mongodb_download_auth.username | default(omit) }}"
