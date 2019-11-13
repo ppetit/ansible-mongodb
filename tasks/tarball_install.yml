@@ -30,6 +30,7 @@
     dest: "/tmp"
     creates: "/tmp/mongodb-linux-{{ ansible_architecture }}-rhel70-{{ mongodb_version }}"
   delegate_to: localhost
+  run_once: true
   check_mode: false
 
 - name: propagate mongodb binaries
